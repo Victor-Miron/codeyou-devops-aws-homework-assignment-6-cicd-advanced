@@ -1,4 +1,4 @@
-name: Ruby CI Pipeline
+name: Ruby Develop Pipeline
 
 on:
   push:
@@ -33,6 +33,9 @@ jobs:
 
   test:
     runs-on: ubuntu-latest
+    needs: 
+      ruby-ci:
+
     steps:
       - uses: actions/checkout@v3
       - name: Install gems
@@ -42,12 +45,18 @@ jobs:
 
 
   build:
-      steps:
+    runs-on: ubuntu-latest
+    needs: test
+
+    steps:
       - uses: actions/checkout@v3
       - name: Build docker Image
       - run: docker build -t {{ secrets.DOCKER_USERNAME }}/develop .
 
   push:
+    runs-on: ubuntu-latest
+    needs: build
+
     steps:
       - uses: actions/checkout@v3
       - name: Login to DockerHub
