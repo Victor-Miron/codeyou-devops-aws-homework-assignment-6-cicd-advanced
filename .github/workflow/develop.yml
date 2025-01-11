@@ -1,0 +1,56 @@
+name: Ruby CI Pipeline
+
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  ruby-ci:
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Checkout code
+      - uses: actions/checkout@v3
+
+      - name: Set up Ruby
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.1
+   
+      - name: Install Dependencies
+        run: bundle install
+      
+      - name: Update Advisory Database
+        run: bundle exec bundle-audit update
+
+      - name: Check for Vulnerabilities
+        run: bundle exec bundler-audit check
+
+      - name: Run RuboCop
+        run: bundle exec rubocop
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install gems
+        run: bundle install
+      - name: Initialize RSpec
+        run: bundle exec rspec 
+
+
+  build:
+      steps:
+      - uses: actions/checkout@v3
+      - name: Build docker Image
+      - run: docker build -t {{ secrets.DOCKER_USERNAME }}/develop .
+
+  push:
+    steps:
+      - uses: actions/checkout@v3
+      - name: Login to DockerHub
+        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login --username ${{ secrets.DOCKER_USERNAME }} --password-stdin
+      - name: Push Docker Image
+        run: docker push ${{ secrets.DOCKER_USERNAME}}/develop 
