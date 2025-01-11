@@ -25,10 +25,10 @@ jobs:
         run: gem install bundler-audit
       
       - name: Update Advisory Database
-        run: bundle exec bundle-audit update
+        run: bundle bundle-audit update
 
       - name: Check for Vulnerabilities
-        run: bundle exec bundler-audit check
+        run: bundle bundler-audit check
 
       - name: Run RuboCop
         run: bundle exec rubocop
