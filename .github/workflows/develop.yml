@@ -81,14 +81,8 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Configure Credential Helper
-        run: echo '{"credsStore":"desktop"}' > ~/.docker/config.json
-
       - name: Login to DockerHub
         run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login --username ${{ secrets.DOCKER_USERNAME }} --password-stdin
-
-      - name: List Docker Images
-        run: docker images
 
       - name: Push Docker Image
         run: docker push ${{ secrets.DOCKER_USERNAME}}/develop 
