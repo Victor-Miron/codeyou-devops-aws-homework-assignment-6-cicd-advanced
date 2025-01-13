@@ -74,7 +74,7 @@ jobs:
         run: docker build -t ${{secrets.DOCKER_USERNAME}}/develop:develop .
 
       - name: Retag Docker Image
-        run: docker tag develop:develop ${{ secrets.DOCKER_USERNAME }}/develop:develop
+        run: docker tag ${{ secrets.DOCKER_USERNAME }}/develop:develop ${{ secrets.DOCKER_USERNAME }}/develop:develop
       
       - name: List Docker Images
         run: docker images
