@@ -53,7 +53,7 @@ jobs:
         run: bundle exec rspec
 
 
-  build:
+  build-and-push:
     runs-on: ubuntu-latest
     needs: test
 
