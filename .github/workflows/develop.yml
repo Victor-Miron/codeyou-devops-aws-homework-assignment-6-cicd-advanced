@@ -71,8 +71,8 @@ jobs:
           sudo apt-get install -y docker-ce docker-ce-cli containerd.io
 
       - name: Build docker Image
-        run: docker build -t ruby:develop .
-      
+        run: docker build -t docker.io/${{secrets.DOCKER_USERNAME}}/develop:develop .
+
       - name: List Docker Images
         run: docker images
         
@@ -88,4 +88,4 @@ jobs:
         run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login --username ${{ secrets.DOCKER_USERNAME }} --password-stdin
 
       - name: Push Docker Image
-        run: docker push ${{secrets.DOCKER_USERNAME}}/develop:develop
+        run: docker push docker.io/${{secrets.DOCKER_USERNAME}}/develop:develop
