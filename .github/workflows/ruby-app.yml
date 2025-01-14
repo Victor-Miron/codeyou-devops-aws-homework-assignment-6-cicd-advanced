@@ -68,4 +68,4 @@ jobs:
         run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login --username ${{ secrets.DOCKER_USERNAME }} --password-stdin
 
       - name: Push Docker Image
-        run: docker push ${{ secrets.DOCKER_USERNAME }}/ruby-app:${{ github.sha::0:7 }}
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/ruby-app: ${{ github.sha::0:7 }}
