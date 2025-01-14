@@ -1,4 +1,4 @@
-name: Ruby Develop Pipeline
+name: Ruby Main Pipeline
 
 on:
   push:
